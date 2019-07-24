@@ -1,0 +1,137 @@
+<template>
+
+    <style>
+            
+        .header {
+          text-align: center;
+        }
+    
+        .field {
+          display: flex;          
+          margin: 20px auto;
+        }
+    
+        .button-container {
+          display: flex;
+          justify-content: flex-end;
+          margin: auto;
+        }
+    
+        .button-container button {
+          margin: 3px;
+        }
+    
+        .main {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+        }
+
+        .form-label-wrapper {
+          display: block;
+          padding: 50px 0px 0px;          
+        }
+    
+      </style>
+    
+    <h2 class="mdc-typography--headline2">Forms</h2>
+  
+    <div>
+      <div class="mdc-layout-grid mdc-elevation--z6">
+        <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell">
+                <div class="mdc-text-field field">
+                  <input type="text" class="mdc-text-field__input" id="username-input2" name="username" required />
+                  <label class="mdc-floating-label" for="username-input">Username</label>
+                  <div class="mdc-line-ripple"></div>
+                </div>
+            </div>
+
+            <div  class="mdc-layout-grid__cell">
+                <div class="mdc-text-field field">
+                  <input type="password" class="mdc-text-field__input" id="password-input2" name="password" required
+                    minlength="8" />
+                  <label class="mdc-floating-label" for="password-input">Password</label>
+                  <div class="mdc-line-ripple"></div>
+                </div>                
+            </div>      
+
+            <div class="mdc-form-field mdc-layout-grid__cell--align--top">
+              <div class="mdc-checkbox">
+                <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1" asp-for="RememberLogin" />
+                <div class="mdc-checkbox__background">
+                  <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                    <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                  </svg>
+                  <div class="mdc-checkbox__mixedmark"></div>
+                </div>
+              </div>
+              <label for="checkbox-1" asp-for="RememberLogin">
+                <strong>Remember My Login</strong>
+              </label>
+          </div>      
+        </div>
+        
+        <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
+                <div class="mdc-text-field  field">
+                  <input type="text" class="mdc-text-field__input" id="username-input" name="username" required />
+                  <label class="mdc-floating-label" for="username-input">Username</label>
+                  <div class="mdc-line-ripple"></div>
+                </div>
+            </div>
+
+            <div  class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
+                <div class="mdc-text-field  field">
+                  <input type="password" class="mdc-text-field__input" id="password-input" name="password" required
+                    minlength="8" />
+                  <label class="mdc-floating-label" for="password-input">Password</label>
+                  <div class="mdc-line-ripple"></div>
+                </div>                
+            </div>      
+
+            <div class="mdc-form-field mdc-layout-grid__cell--align--top">
+              <div class="mdc-checkbox">
+                <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1" asp-for="RememberLogin" />
+                <div class="mdc-checkbox__background">
+                  <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                    <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                  </svg>
+                  <div class="mdc-checkbox__mixedmark"></div>
+                </div>
+              </div>
+              <label for="checkbox-1" asp-for="RememberLogin">
+                <strong>Remember My Login</strong>
+              </label>
+          </div>      
+        </div>
+
+        <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-1">
+              <label class="form-label-wrapper mdc-typography mdc-typography--subtitle1" for="username-input3">Name:</label>
+            </div>
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8">
+                <div class="mdc-text-field  field">
+                  <input type="text" class="mdc-text-field__input" id="username-input3" name="username" required />
+                  <label class="mdc-floating-label" for="username-input3">Username</label>
+                  <div class="mdc-line-ripple"></div>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <div class="button-container">
+          <button type="button" class="mdc-button cancel">
+            Cancel
+          </button>
+          <button class="mdc-button mdc-button--raised next">
+            Next
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    
+</template>
