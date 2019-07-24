@@ -14,13 +14,12 @@ import {MDCTextFieldHelperText} from '@material/textfield/helper-text';
 import {MDCSlider} from '@material/slider';
 import {MDCLinearProgress} from '@material/linear-progress';
 import {MDCSelectIcon} from '@material/select/icon';
-
-
 import {viewEngineHooks, View, ViewEngineHooks, ViewResources, ViewCompileInstruction, ViewFactory, ViewCreateInstruction, Controller} from 'aurelia-templating';
 import { isNullOrUndefined } from 'util';
 import { MDCMenuSurface } from '@material/menu-surface/component';
 import { Container } from 'aurelia-framework';
 import { MDCDialog } from '@material/dialog';
+import {MDCDataTable} from '@material/data-table';
 
 
 export class MDCHook implements ViewEngineHooks{
@@ -132,6 +131,7 @@ export class MDCHook implements ViewEngineHooks{
     document.querySelectorAll('.mdc-linear').forEach(t => new MDCLinearProgress(t));
     document.querySelectorAll('.mdc-select__icon').forEach(t => new MDCSelectIcon(t));
     document.querySelectorAll('.mdc-dialog').forEach(t => new MDCDialog(t));
+    //document.querySelectorAll('.mdc-data-table').forEach(t => new MDCDataTable(t));
   }
 
   
