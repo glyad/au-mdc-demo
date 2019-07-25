@@ -1,139 +1,178 @@
-import {MDCRadio} from '@material/radio';
-import {MDCSwitch} from '@material/switch';
-import {MDCFloatingLabel} from '@material/floating-label';
-import {MDCLineRipple} from '@material/line-ripple';
-import {MDCList} from '@material/list';
-import {MDCMenu} from '@material/menu';
-import {MDCNotchedOutline} from '@material/notched-outline';
-import {MDCTextField} from '@material/textfield';
-import {MDCRipple, MDCRippleFoundation} from '@material/ripple';
-import {MDCSelect} from '@material/select';
-import {MDCFormField} from '@material/form-field';
-import {MDCCheckbox} from '@material/checkbox';
-import {MDCTextFieldHelperText} from '@material/textfield/helper-text';
-import {MDCSlider} from '@material/slider';
-import {MDCLinearProgress} from '@material/linear-progress';
-import {MDCSelectIcon} from '@material/select/icon';
-import {viewEngineHooks, View, ViewEngineHooks, ViewResources, ViewCompileInstruction, ViewFactory, ViewCreateInstruction, Controller} from 'aurelia-templating';
+import { MDCRadio } from '@material/radio';
+import { MDCSwitch } from '@material/switch';
+import { MDCFloatingLabel } from '@material/floating-label';
+import { MDCLineRipple } from '@material/line-ripple';
+import { MDCList } from '@material/list';
+import { MDCMenu } from '@material/menu';
+import { MDCNotchedOutline } from '@material/notched-outline';
+import { MDCTextField } from '@material/textfield';
+import { MDCRipple, MDCRippleFoundation } from '@material/ripple';
+import { MDCSelect } from '@material/select';
+import { MDCFormField } from '@material/form-field';
+import { MDCCheckbox } from '@material/checkbox';
+import { MDCTextFieldHelperText } from '@material/textfield/helper-text';
+import { MDCSlider } from '@material/slider';
+import { MDCLinearProgress } from '@material/linear-progress';
+import { MDCSelectIcon } from '@material/select/icon';
+import { viewEngineHooks, View, ViewEngineHooks, ViewResources, ViewCompileInstruction, ViewFactory, ViewCreateInstruction, Controller } from 'aurelia-templating';
 import { isNullOrUndefined } from 'util';
 import { MDCMenuSurface } from '@material/menu-surface/component';
 import { Container } from 'aurelia-framework';
 import { MDCDialog } from '@material/dialog';
-import {MDCDataTable} from '@material/data-table';
+import { MDCDataTable } from '@material/data-table';
 
+/**
+ * Used to initialize MDC components
+ * @export
+ * @class MDCHook
+ * @implements {ViewEngineHooks}
+ */
+// tslint:disable-next-line: completed-docs
+export class MDCHook implements ViewEngineHooks {
+         private static counter: number = 1;
 
-export class MDCHook implements ViewEngineHooks{
+         /**
+          * Invoked before the view is unbind. The bindingContext and overrideContext are still available on the view.
+          * @param view The view that was created by the factory.
+          */
+         public beforeUnbind?: (view: View) => void;
 
-  private selector = '.mdc-button, .mdc-icon-button, .mdc-fab, .mdc-card__primary-action';
+         private selector: string =
+           ".mdc-button, .mdc-icon-button, .mdc-fab, .mdc-card__primary-action";
 
-  private static counter: number = 1;
+         constructor() {
+           console.log(`MDCHook ctor called ${MDCHook.counter++} times.`);
+         }
 
-  constructor(){
-    console.log('MDCHook ctor called ' +  MDCHook.counter++ + ' times.');
-  }
+         /**
+          * Invoked before a template is compiled.
+          * @param content The DocumentFragment to compile.
+          * @param resources The resources to compile the view against.
+          * @param instruction The compilation instruction associated with the compilation process.
+          */
+         public beforeCompile(
+           content: DocumentFragment,
+           resources: ViewResources,
+           instruction: ViewCompileInstruction
+         ): void {
+           console.log("Hook beforeCompile");
+         }
 
-      /**
-      * Invoked before a template is compiled.
-      * @param content The DocumentFragment to compile.
-      * @param resources The resources to compile the view against.
-      * @param instruction The compilation instruction associated with the compilation process.
-      */
-    beforeCompile (content: DocumentFragment, resources: ViewResources, instruction: ViewCompileInstruction) {
-      console.log('Hook beforeCompile');
-    }
-    
-    /**
-       * Invoked after a template is compiled.
-       * @param viewFactory The view factory that was produced from the compilation process.
-       */
-    afterCompile(viewFactory: ViewFactory) {
-      console.log('Hook afterCompile');
-    }
-    
-    /**
-       * Invoked before a view is created.
-       * @param viewFactory The view factory that will be used to create the view.
-       * @param container The DI container used during view creation.
-       * @param content The cloned document fragment representing the view.
-       * @param instruction The view creation instruction associated with this creation process.
-       */
-    beforeCreate(viewFactory: ViewFactory, container: Container, content: DocumentFragment, instruction: ViewCreateInstruction) {
-      console.log('Hook beforeCreate');
-    }
-    
-    /**
-     * Invoked after a view is created.
-     * @param view The view that was created by the factory.
-     */
-    afterCreate (view: View) {
-      console.log('Hook afterCreate');
-    }
-    
-    
-    
-    
-    /**
-       * Invoked before the view is unbind. The bindingContext and overrideContext are still available on the view.
-       * @param view The view that was created by the factory.
-       */
-    beforeUnbind?: (view: View) => void;
-    /**
-     * Invoked after the bindingContext and overrideContext are configured on the view but before the view is bound.
-     * @param view The view that was created by the factory.
-     */
-    beforeBind(view: View) {
-    //console.log('Hooked on: ' + view.controller.viewModel.constructor.name);
-    let fragment = view.fragment;
+         /**
+          * Invoked after a template is compiled.
+          * @param viewFactory The view factory that was produced from the compilation process.
+          */
+         public afterCompile(viewFactory: ViewFactory): void {
+           console.log("Hook afterCompile");
+         }
 
-    // fragment.querySelectorAll('.mdc-form-field').forEach(t => {
-    //   const inner: HTMLElement = t.querySelector('input');
-    //   const formField = new MDCFormField(t);
+         /**
+          * Invoked before a view is created.
+          * @param viewFactory The view factory that will be used to create the view.
+          * @param container The DI container used during view creation.
+          * @param content The cloned document fragment representing the view.
+          * @param instruction The view creation instruction associated with this creation process.
+          */
+         public beforeCreate(
+           viewFactory: ViewFactory,
+           container: Container,
+           content: DocumentFragment,
+           instruction: ViewCreateInstruction
+         ): void {
+           console.log("Hook beforeCreate");
+         }
 
-    //   if (!isNullOrUndefined(inner)) {
-    //     const typeAttribute = inner.getAttribute('type');
-    //     if (!isNullOrUndefined(typeAttribute)) {
-    //       switch (typeAttribute) {
-    //         case 'checkbox':
-    //           const cb = fragment.querySelector('.mdc-checkbox');
-    //           console.log(cb);
-    //           formField.input = new MDCCheckbox(cb);
-    //           break;   
-            
-    //       }
-    //     }
-    //   }
-      
-    // }); 
-   
-    
-  
-    document.querySelectorAll('.mdc-floating-label').forEach(t => new MDCFloatingLabel(t));
-    document.querySelectorAll('.mdc-checkbox').forEach(t => new MDCCheckbox(t));
-    document.querySelectorAll('.mdc-switch').forEach(t => new MDCSwitch(t));
-    document.querySelectorAll('.mdc-menu-surface').forEach(t => new MDCMenuSurface(t));
-    document.querySelectorAll('.mdc-menu').forEach(t => new MDCMenu(t));
-    document.querySelectorAll('.mdc-line-ripple').forEach(t => new MDCLineRipple(t))
-    document.querySelectorAll('.mdc-notched-outlin e').forEach(t => new MDCNotchedOutline(t))
-    document.querySelectorAll('.mdc-list').forEach(t => {
-      let list = new MDCList(t);
-      list.listElements.map((listItemEl) => new MDCRipple(listItemEl))
-    });
-    document.querySelectorAll('.mdc-slider').forEach(t => {
-      const slider = new MDCSlider(t);
-    });
-    
-    document.querySelectorAll(this.selector).forEach(t => new MDCRipple(t));
-    document.querySelectorAll('.mdc-text-field').forEach(t => new MDCTextField(t));
-    //fragment.querySelectorAll('.mdc-select').forEach(t => new MDCSelect(t));
-    document.querySelectorAll('.mdc-select').forEach(t => new MDCSelect(t));
-    document.querySelectorAll('.mdc-text-field-helper-text').forEach(t => new MDCTextFieldHelperText(t));
-    document.querySelectorAll('.mdc-radio').forEach(t => new MDCRadio(t));
-    document.querySelectorAll('.mdc-linear').forEach(t => new MDCLinearProgress(t));
-    document.querySelectorAll('.mdc-select__icon').forEach(t => new MDCSelectIcon(t));
-    document.querySelectorAll('.mdc-dialog').forEach(t => new MDCDialog(t));
-    //document.querySelectorAll('.mdc-data-table').forEach(t => new MDCDataTable(t));
-  }
+         /**
+          * Invoked after a view is created.
+          * @param view The view that was created by the factory.
+          */
+         public afterCreate(view: View): void {
+           console.log("Hook afterCreate");
+         }
+         /**
+          * Invoked after the bindingContext and overrideContext are configured on the view but before the view is bound.
+          * @param view The view that was created by the factory.
+          */
+         public beforeBind(view: View): void {
+           //console.log('Hooked on: ' + view.controller.viewModel.constructor.name);
+           const fragment = view.fragment;
 
-  
+           // fragment.querySelectorAll('.mdc-form-field').forEach(t => {
+           //   const inner: HTMLElement = t.querySelector('input');
+           //   const formField = new MDCFormField(t);
 
-}
+           //   if (!isNullOrUndefined(inner)) {
+           //     const typeAttribute = inner.getAttribute('type');
+           //     if (!isNullOrUndefined(typeAttribute)) {
+           //       switch (typeAttribute) {
+           //         case 'checkbox':
+           //           const cb = fragment.querySelector('.mdc-checkbox');
+           //           console.log(cb);
+           //           formField.input = new MDCCheckbox(cb);
+           //           break;
+
+           //       }
+           //     }
+           //   }
+
+           // });
+
+           document
+             .querySelectorAll(".mdc-floating-label")
+             .forEach(t => new MDCFloatingLabel(t));
+           document
+             .querySelectorAll(".mdc-checkbox")
+             .forEach(t => new MDCCheckbox(t));
+           document
+             .querySelectorAll(".mdc-switch")
+             .forEach(t => new MDCSwitch(t));
+           document
+             .querySelectorAll(".mdc-menu-surface")
+             .forEach(t => new MDCMenuSurface(t));
+           document
+             .querySelectorAll(".mdc-menu")
+             .forEach(t => new MDCMenu(t));
+           document
+             .querySelectorAll(".mdc-line-ripple")
+             .forEach(t => new MDCLineRipple(t));
+           document
+             .querySelectorAll(".mdc-notched-outlin e")
+             .forEach(t => new MDCNotchedOutline(t));
+           document.querySelectorAll(".mdc-list").forEach(t => {
+             const list = new MDCList(t);
+             list.listElements.map(
+               listItemEl => new MDCRipple(listItemEl)
+             );
+           });
+           document.querySelectorAll(".mdc-slider").forEach(t => {
+             const slider = new MDCSlider(t);
+           });
+
+           document
+             .querySelectorAll(this.selector)
+             .forEach(t => new MDCRipple(t));
+           document
+             .querySelectorAll(".mdc-text-field")
+             .forEach(t => new MDCTextField(t));
+           //fragment.querySelectorAll('.mdc-select').forEach(t => new MDCSelect(t));
+           document
+             .querySelectorAll(".mdc-select")
+             .forEach(t => new MDCSelect(t));
+           document
+             .querySelectorAll(".mdc-text-field-helper-text")
+             .forEach(t => new MDCTextFieldHelperText(t));
+           document
+             .querySelectorAll(".mdc-radio")
+             .forEach(t => new MDCRadio(t));
+           document
+             .querySelectorAll(".mdc-linear")
+             .forEach(t => new MDCLinearProgress(t));
+           document
+             .querySelectorAll(".mdc-select__icon")
+             .forEach(t => new MDCSelectIcon(t));
+           document
+             .querySelectorAll(".mdc-dialog")
+             .forEach(t => new MDCDialog(t));
+           //document.querySelectorAll('.mdc-data-table').forEach(t => new MDCDataTable(t));
+         }
+       }
