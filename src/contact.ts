@@ -5,6 +5,7 @@ import { DialogController, DialogService, DialogCancelableOperationResult } from
 import { ObjectViewModel } from 'logofx';
 import { IContact, Contact as ContactModel } from 'model';
 import { autoinject } from 'aurelia-framework';
+import { MdcValidationRenderer } from 'resources/mdc-components';
 
 /**
  * Represents Contact view model.
@@ -12,16 +13,18 @@ import { autoinject } from 'aurelia-framework';
 @autoinject
 export class Contact extends ObjectViewModel<ContactModel> {
 
-  private _dialogController: DialogController;
-
   constructor(model: ContactModel, private dialogService: DialogService) {
     super(model);
 
-    console.log(`Contact - ${model.name}`);
+    this.validationController.addRenderer(new MdcValidationRenderer());
   }
 
   public ok(): void {
-    this.dialogService.controllers[0].ok(this.model);
+    this.validationController.validate().then(validation => {
+      if (validation.valid) {
+        this.dialogService.controllers[0].ok(this.model);
+      }
+    });
   }
 
   public cancel(): void {

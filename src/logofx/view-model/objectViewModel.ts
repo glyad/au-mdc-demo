@@ -54,7 +54,6 @@ export abstract class ObjectViewModel<T extends IModel<any>> implements IObjectV
 
       const controllerFactory: ValidationControllerFactory = Container.instance.get(ValidationControllerFactory);
       this.validationController = controllerFactory.createForCurrentScope();
-      //this.model.validationRules.on(this.model);
   }
 
 }

@@ -1,7 +1,8 @@
 import { PLATFORM } from 'aurelia-pal';
-import {FrameworkConfiguration} from 'aurelia-framework';
-  
-  export function configure(config: FrameworkConfiguration): void {
+import { FrameworkConfiguration } from 'aurelia-framework';
+
+export * from './mdc-validation-renderer';
+
+export function configure(config: FrameworkConfiguration): void {
     config.globalResources([PLATFORM.moduleName('./mdc-hook')]);
   }
-  
