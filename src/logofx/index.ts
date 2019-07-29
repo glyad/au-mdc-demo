@@ -1,33 +1,36 @@
-import { FrameworkConfiguration } from 'aurelia-framework';
+import { FrameworkConfiguration, PLATFORM } from 'aurelia-framework';
+import * as __utils__ from './utils';
 
+export { __utils__ as utils };
 export * from './model/model';
 export * from './Core';
 export * from './view-model';
 export * from './logging';
+export * from './ui-services';
 
-export function configure(config: FrameworkConfiguration) {
+export function configure(config: FrameworkConfiguration): void {
   //config.globalResources(['./model', './Core', './view-model']);
+  // config.feature(PLATFORM.moduleName('model/index'));
+  // config.feature(PLATFORM.moduleName('view-model/index'));
 }
-
 
 /**
  * Checks if the given argument is undefined.
- * @function
+ *
  */
 export function isUndefined(obj: any): boolean {
   return (typeof obj) === 'undefined';
 }
 
 /**
-* Checks if the given argument is a string.
-* @function
-*/
+ * Checks if the given argument is a string.
+ */
 export function isString(obj: any): boolean {
   return Object.prototype.toString.call(obj) === '[object String]';
 }
 
 const _hasOwnProperty = Object.prototype.hasOwnProperty;
-export const has = function(obj: any, prop: any) {
+export const has = (obj: any, prop: any) => {
   return _hasOwnProperty.call(obj, prop);
 };
 
@@ -48,9 +51,9 @@ export function makeString<T>(item: T, join: string = ','): string {
               } else {
                   toret = toret + join;
               }
-              toret = toret + prop + ':' + (<any>item)[prop];
+              toret = `${toret} ${prop}: ${(<any>item)[prop]}`;
           }
       }
-      return toret + '}';
+      return `${toret}` + '}';
   }
 }

@@ -1,10 +1,9 @@
-import { BindingEngine, transient, View } from "aurelia-framework";
-import { IModel } from './../model';
+import { transient, View } from "aurelia-framework";
+import { IModel } from '../model';
 import { IObjectViewModel } from 'logofx';
 import * as Core from '../Core';
 
-
-@transient()
+@transient
 export class WrappingCollection extends Array {
 
     public factoryMethod: (item: IModel<any> | any) => IObjectViewModel<IModel<any>> | any | null | undefined;
@@ -13,7 +12,7 @@ export class WrappingCollection extends Array {
     private _source: Array<any>;
     private _internalMap: WeakMap<any, any> = new WeakMap();
     //private _selectedItems: any[] = [];
-    
+
     private pushCore: (model: any, wrapped: any) => void = (model: any, wrapped: any) => {
         this._internalMap.set(model, wrapped);
         this.push(wrapped);
@@ -26,7 +25,7 @@ export class WrappingCollection extends Array {
     private addCore: (modelItem: any, wrappedItem: any, indexOfModelItem: number) => void = (modelItem: any, wrappedItem: any, indexOfModelItem: number) => {
         if (this.containsWrapper(modelItem))
             throw new Error('The duplications are not allowed for the model items.');
-        
+
         this._internalMap.set(modelItem, wrappedItem);
         this.splice(indexOfModelItem, 0, wrappedItem);
 
@@ -34,11 +33,11 @@ export class WrappingCollection extends Array {
 
     private removeCore: (index: number, removedItem: any) => void = (index: number, removedItem: any) => {
         this._internalMap.delete(removedItem);
-        this.splice(index, 1); 
+        this.splice(index, 1);
     }
 
     private onSubscribe: (changes: any) => void = (changes: any) => {
-        if ((<Array<any>>changes).length == 0)
+        if ((<Array<any>>changes).length === 0)
                     return;
 
                 let innerChanges = changes[0];
@@ -63,7 +62,6 @@ export class WrappingCollection extends Array {
                 }
     }
 
-
     constructor ( factoryMethod?: (item: IModel<any>) => IObjectViewModel<IModel<any>>
                 , source?: Array<any> ) {
         super();
@@ -79,7 +77,6 @@ export class WrappingCollection extends Array {
         else 
             this._source = source;
 
-        
         Core.getDefaultObserverLocator()
             .getArrayObserver(this._source)
             .subscribe('clbk', this.onSubscribe);
@@ -93,7 +90,6 @@ export class WrappingCollection extends Array {
         console.log('CHANGES 2:  ' + typeof changes);
     }
 
-    
     private static createWrapper(item: any, factoryMethod): IObjectViewModel<IModel<any>> | any
     {
         return factoryMethod(item);

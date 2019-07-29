@@ -21,22 +21,26 @@ export interface ICanBeDirty {
 
 export interface IEditableModel<T> extends IModel<T>, ICanBeDirty {
 
+  isNew: boolean;
+
 }
 
+/**
+ * Model
+ */
 export class Model<T> implements IModel<T> {
-    
-    id: T;
+
+    public id: T;
 
     //Made public for seralization during cloning/spreading
     public validationRules: FluentRuleCustomizer<IModel<T>, any>;
-    private _rules: Rule<{}, any>[][];        
+    private _rules: Rule<{}, any>[][];
 
     public get rules(): Rule<{}, any>[][] {
         return this._rules;
     }
 
-    public set rules(value: Rule<{}, any>[][]) 
-    {
+    public set rules(value: Rule<{}, any>[][]) {
         if (value === this._rules) {
             return;
         }
@@ -44,14 +48,18 @@ export class Model<T> implements IModel<T> {
         this._rules = value;
     }
 
-    toString(): string {
+    public toString(): string {
         return makeString(this);
     }
 }
 
+/**
+ * EditableModel
+ */
 export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
-  
+
   private _isDirty: boolean = false;
+  private _isNew: boolean = true;
 
   constructor() {
     super();
@@ -62,7 +70,11 @@ export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
     //       this.isDirty = true;
     //     }
     //   }));
-      
+
+  }
+
+  public get isNew(): boolean {
+    return this._isNew;
   }
 
   public get isDirty(): boolean {
@@ -72,11 +84,8 @@ export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
   public makeDirty(): void {
     this._isDirty = true;
   }
-  
+
   public cleanDirty(): void {
     this._isDirty = false;
-  }  
+  }
 }
-
-
-

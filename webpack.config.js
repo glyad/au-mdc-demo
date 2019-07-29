@@ -22,16 +22,26 @@ const nodeModulesDir = path.resolve(__dirname, 'node_modules');
 const baseUrl = '/';
 
 const cssRules = [
-    { loader: 'css-loader' },
+    { loader: 'css-loader',
+    options: {
+      includePaths: ['./node_modules' , './src/resources/css' ]
+    }
+   }
 ];
 const scssRules1 = [{
-    loader: 'style-loader'
+    loader: 'style-loader',
+    options: {
+      includePaths: ['./node_modules' , './src/resources/css' ]
+  }
 }, {
-    loader: 'css-loader'
+    loader: 'css-loader',
+    options: {
+      includePaths: ['./node_modules' , './src/resources/css' ]
+  }
 }, {
     loader: 'sass-loader',
     options: {
-        includePaths: ['./node_modules' /*, './src/resources/css'*/ ]
+        includePaths: ['./node_modules' , './src/resources/css' ]
     }
 }];
 const scssRules2 = [{
@@ -39,7 +49,7 @@ const scssRules2 = [{
 }, {
     loader: 'sass-loader',
     options: {
-        includePaths: ['./node_modules' /*, './src/resources/css'*/ ]
+        includePaths: ['./node_modules' , './src/resources/css' ]
     }
 }];
 
@@ -179,7 +189,11 @@ module.exports = ({ production, server, extractCss, coverage, analyze, karma } =
       'Promise': ['promise-polyfill', 'default']
     }),
     new ModuleDependenciesPlugin({
-      'aurelia-testing': ['./compile-spy', './view-spy']
+      'aurelia-testing': ['./compile-spy', './view-spy'],
+      "aurelia-i18n": [
+          { name: "locales/ru/translation.json" },
+          { name: "locales/en/translation.json" }
+      ]
     }),
     new HtmlWebpackPlugin({
       template: 'index.ejs',
