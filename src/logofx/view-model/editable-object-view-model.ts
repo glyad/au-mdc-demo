@@ -6,25 +6,15 @@ import { ObjectViewModel } from './objectViewModel';
 /**
  * EditableObjectViewModel
  */
-export abstract class EditableObjectViewModel<T extends IEditableModel<string>> extends ObjectViewModel<T> {
+export abstract class EditableObjectViewModel<T extends IEditableModel<any>> extends ObjectViewModel<T> {
     private originalModel: T;
 
     // tslint:disable: no-parameter-properties
-    constructor(private _model: T) {
-      super(_model);
-      console.log("EditableObjectViewModel ctor.");
-      this.originalModel = _model;
-      this.copyModel(_model);
+    constructor(model: T) {
+      super(model);
     }
 
-    private copyModel(model: T): void {
-      const rules = model.validationRules;
-      model.validationRules = null;
-      this.model = jsonClone(model);
-      this.model.validationRules = rules;
-      this.model.validationRules.on(this.model);
-      model.validationRules = rules;
-  }
+    
 
     get isDirty(): boolean {
       return this.model.isDirty;
@@ -39,19 +29,19 @@ export abstract class EditableObjectViewModel<T extends IEditableModel<string>> 
     public canCancelChanges: boolean;
 
     public cancelEdit(): void {
-        this.copyModel(this.originalModel);
-        this.discard(this.model);
+        //this.copyModel(this.originalModel);
+        //this.discard(this.model);
     }
 
     public endEdit(): void {
-        this.save(this.model).then(() => {
-                                   //TODO: For some unknown reason the following line
-                                   //fails to work - restore when the reason is clear
-                                   //this.model.CleanDirty();
-                                   this.isDirty = false;
-                                   // tslint:disable-next-line: no-floating-promises
-                                   this.afterSave(this.model);
-                            },     this.showError);
+        // this.save(this.model).then(() => {
+        //                            //TODO: For some unknown reason the following line
+        //                            //fails to work - restore when the reason is clear
+        //                            //this.model.CleanDirty();
+        //                            this.isDirty = false;
+        //                            // tslint:disable-next-line: no-floating-promises
+        //                            this.afterSave(this.model);
+        //                     },     this.showError);
     }
 
     protected async abstract save(model: T): Promise<any>;

@@ -1,5 +1,6 @@
 import { Rule, FluentRuleCustomizer } from 'aurelia-validation';
 import { makeString } from 'logofx';
+import { deepClone } from 'logofx/utils';
 
 export interface IModel<T> {
     id: T;
@@ -22,6 +23,12 @@ export interface ICanBeDirty {
 export interface IEditableModel<T> extends IModel<T>, ICanBeDirty {
 
   isNew: boolean;
+
+  beginEdit(): void;
+
+  cancelEdit(): void;
+
+  commitEdit(): void;
 
 }
 
@@ -60,6 +67,7 @@ export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
 
   private _isDirty: boolean = false;
   private _isNew: boolean = true;
+  private _originalState: IEditableModel<T>;
 
   constructor() {
     super();
@@ -87,5 +95,24 @@ export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
 
   public cleanDirty(): void {
     this._isDirty = false;
+  }
+
+  public beginEdit(): void {
+    //if (!this.isNew)
+      this._originalState = this.clone(this);
+      console.log(`Original is ` + this._originalState.toString());
+      console.log(`This is ` + this.toString());
+  }
+
+  public cancelEdit(): void {
+    //this = this.clone(this._originalState);
+  }
+  public commitEdit(): void {
+    this.cleanDirty();
+    //throw new Error("Method not implemented.");
+  }
+
+  private clone(model: IEditableModel<T>): IEditableModel<T> {
+    return deepClone(model);
   }
 }
