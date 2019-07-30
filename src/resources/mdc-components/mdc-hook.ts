@@ -6,8 +6,8 @@ import { MDCList } from '@material/list';
 import { MDCMenu } from '@material/menu';
 import { MDCNotchedOutline } from '@material/notched-outline';
 import { MDCTextField } from '@material/textfield';
-import { MDCRipple, MDCRippleFoundation } from '@material/ripple';
-import { MDCSelect } from '@material/select';
+import { MDCRipple } from '@material/ripple';
+import { MDCSelect, MDCSelectHelperText } from '@material/select';
 import { MDCFormField } from '@material/form-field';
 import { MDCCheckbox } from '@material/checkbox';
 import { MDCTextFieldHelperText } from '@material/textfield/helper-text';
@@ -20,12 +20,11 @@ import { MDCMenuSurface } from '@material/menu-surface/component';
 import { Container } from 'aurelia-framework';
 import { MDCDialog } from '@material/dialog';
 import { MDCDataTable } from '@material/data-table';
+import { MDCChipSet, MDCChip } from '@material/chips';
 
 /**
  * Used to initialize MDC components
  * @export
- * @class MDCHook
- * @implements {ViewEngineHooks}
  */
 // tslint:disable-next-line: completed-docs
 export class MDCHook implements ViewEngineHooks {
@@ -38,7 +37,7 @@ export class MDCHook implements ViewEngineHooks {
          public beforeUnbind?: (view: View) => void;
 
          private selector: string =
-           ".mdc-button, .mdc-icon-button, .mdc-fab, .mdc-card__primary-action";
+           ".mdc-button, .mdc-icon-button, .mdc-fab, .mdc-card__primary-action .mdc-chip";
 
          constructor() {
            console.log(`MDCHook ctor called ${MDCHook.counter++} times.`);
@@ -94,8 +93,6 @@ export class MDCHook implements ViewEngineHooks {
           * @param view The view that was created by the factory.
           */
          public beforeBind(view: View): void {
-           //console.log('Hooked on: ' + view.controller.viewModel.constructor.name);
-           const fragment = view.fragment;
 
            // fragment.querySelectorAll('.mdc-form-field').forEach(t => {
            //   const inner: HTMLElement = t.querySelector('input');
@@ -136,7 +133,7 @@ export class MDCHook implements ViewEngineHooks {
              .querySelectorAll(".mdc-line-ripple")
              .forEach(t => new MDCLineRipple(t));
            document
-             .querySelectorAll(".mdc-notched-outlin e")
+             .querySelectorAll(".mdc-notched-outline")
              .forEach(t => new MDCNotchedOutline(t));
            document.querySelectorAll(".mdc-list").forEach(t => {
              const list = new MDCList(t);
@@ -147,10 +144,6 @@ export class MDCHook implements ViewEngineHooks {
            document.querySelectorAll(".mdc-slider").forEach(t => {
              const slider = new MDCSlider(t);
            });
-
-           document
-             .querySelectorAll(this.selector)
-             .forEach(t => new MDCRipple(t));
            document
              .querySelectorAll(".mdc-text-field")
              .forEach(t => new MDCTextField(t));
@@ -158,6 +151,9 @@ export class MDCHook implements ViewEngineHooks {
            document
              .querySelectorAll(".mdc-select")
              .forEach(t => new MDCSelect(t));
+           document
+             .querySelectorAll(".mdc-select-helper-text")
+             .forEach(t => new MDCSelectHelperText(t));
            document
              .querySelectorAll(".mdc-text-field-helper-text")
              .forEach(t => new MDCTextFieldHelperText(t));
@@ -173,6 +169,16 @@ export class MDCHook implements ViewEngineHooks {
            document
              .querySelectorAll(".mdc-dialog")
              .forEach(t => new MDCDialog(t));
+           document
+             .querySelectorAll(".mdc-chip-set")
+             .forEach(t => new MDCChipSet(t));
+           document
+             .querySelectorAll(".mdc-chip")
+             .forEach(t => new MDCChip(t));
+           document
+             .querySelectorAll(this.selector)
+             .forEach(t => new MDCRipple(t));
+
            //document.querySelectorAll('.mdc-data-table').forEach(t => new MDCDataTable(t));
          }
        }
