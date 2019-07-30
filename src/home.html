@@ -1,15 +1,70 @@
 <template>
 
   <h2>Home</h2>
+  <div class="mdc-chip-set">
+    <div class="mdc-chip-set mdc-chip-set--filter">
+      <button class="mdc-chip mdc-chip-set--filter">
+        <span class="mdc-chip__checkmark">
+          <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
+            <path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+          </svg>
+        </span>
+        <span class="mdc-chip__text">Filterable content</span>
+      </button>
+      <button class="mdc-chip">
+        <span class="mdc-chip__checkmark">
+          <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
+            <path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+          </svg>
+        </span>
+        <span class="mdc-chip__text">Filterable content</span>
+      </button>
+      <button class="mdc-chip">
+        <span class="mdc-chip__checkmark">
+          <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
+            <path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+          </svg>
+        </span>
+        <span class="mdc-chip__text">Filterable content</span>
+      </button>
+    </div>
+  </div>
+  
+  <div class="mdc-chip-set">
+    <div class="mdc-chip-set mdc-chip-set--choice">
+      <button class="mdc-chip">
+        <span class="mdc-chip__text">Chip content</span>
+      </button>
+      <button class="mdc-chip">
+        <span class="mdc-chip__text">Chip content</span>
+      </button>    
+    </div>
+  </div>
+
+  <div class="mdc-chip-set">
+    <button class="mdc-chip">
+      <span class="mdc-chip__text">Chip content</span>
+    </button>
+    <button class="mdc-chip">
+      <span class="mdc-chip__text">Chip content</span>
+    </button>
+    <button class="mdc-chip">
+      <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">event</i>
+      <span class="mdc-chip__text">Add to calendar</span>
+    </button>
+    <button class="mdc-chip">
+      <span class="mdc-chip__text">Jane Smith</span>
+      <i class="material-icons mdc-chip__icon mdc-chip__icon--trailing" tabindex="0" role="button">cancel</i>
+    </button>
+  </div>
 
   <div>
-    <div class="mdc-slider" tabindex="0" role="slider"
-      aria-valuemin="0" aria-valuemax="100" aria-valuenow.bind="value"
+    <div class="mdc-slider" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow.bind="value"
       aria-label="Select Value">
       <div class="mdc-slider__track-container">
-          <div class="mdc-slider__track"></div>
-          <div class="mdc-slider__track-marker-container"></div>
-        </div>
+        <div class="mdc-slider__track"></div>
+        <div class="mdc-slider__track-marker-container"></div>
+      </div>
       <div class="mdc-slider__thumb-container">
         <svg class="mdc-slider__thumb" width="21" height="21">
           <circle cx="10.5" cy="10.5" r="7.875"></circle>
@@ -20,8 +75,7 @@
   </div>
 
   <div>
-    <div class="mdc-slider" tabindex="0" role="slider"
-      aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+    <div class="mdc-slider" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
       aria-label="Select Value">
       <div class="mdc-slider__track-container">
         <div class="mdc-slider__track"></div>
@@ -36,101 +90,94 @@
   </div>
 
 
-    <div>
-
-  <div class="mdc-form-field">
-    <div class="mdc-checkbox">
-      <input type="checkbox"
-              class="mdc-checkbox__native-control"
-              id="checkbox-1"/>
-      <div class="mdc-checkbox__background">
-        <svg class="mdc-checkbox__checkmark"
-              viewBox="0 0 24 24">
-          <path class="mdc-checkbox__checkmark-path"
-                fill="none"
-                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-        </svg>
-        <div class="mdc-checkbox__mixedmark"></div>
-      </div>
-    </div>
-   <label for="checkbox-1">Checkbox 1</label>
-  </div>
-
   <div>
+
     <div class="mdc-form-field">
-      <div class="mdc-switch mdc-switch--checked">
-        <div class="mdc-switch__track"></div>
-        <div class="mdc-switch__thumb-underlay">
-          <div class="mdc-switch__thumb">
-            <input type="checkbox" id="another-basic-switch" class="mdc-switch__native-control" role="switch" checked>
+      <div class="mdc-checkbox">
+        <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1" />
+        <div class="mdc-checkbox__background">
+          <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+            <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+          </svg>
+          <div class="mdc-checkbox__mixedmark"></div>
+        </div>
+      </div>
+      <label for="checkbox-1">Checkbox 1</label>
+    </div>
+
+    <div>
+      <div class="mdc-form-field">
+        <div class="mdc-switch mdc-switch--checked">
+          <div class="mdc-switch__track"></div>
+          <div class="mdc-switch__thumb-underlay">
+            <div class="mdc-switch__thumb">
+              <input type="checkbox" id="another-basic-switch" class="mdc-switch__native-control" role="switch" checked>
+            </div>
           </div>
         </div>
-      </div>
-      <label for="another-basic-switch">off/on</label>
-    </div>    
-  </div>
-  <div>
-    <div class="mdc-text-field">
-      <input class="mdc-text-field__input" type="text" id="input" required="false">
-      <label for="input" class="mdc-floating-label">Input Label</label>
-      <div class="mdc-line-ripple"></div>
-    </div>
-    <div class="mdc-text-field-helper-line">
-      <div class="mdc-text-field-helper-text">helper text</div>
-    </div>
-  </div>
-
-  <div>
-    <div class="mdc-text-field mdc-text-field--fullwidth">
-      <input class="mdc-text-field__input"
-              type="text"
-              placeholder="Full-Width Text Field"
-              aria-label="Full-Width Text Field">
-      <div class="mdc-line-ripple"></div>
-    </div>
-  </div>
-
-  <div>
-    <div class="mdc-text-field mdc-text-field--textarea">
-      <textarea id="textarea" class="mdc-text-field__input" rows="8" cols="40"></textarea>
-      <div class="mdc-notched-outline">
-        <div class="mdc-notched-outline__leading"></div>
-        <div class="mdc-notched-outline__notch">
-          <label for="textarea" class="mdc-floating-label">Textarea Label</label>
-        </div>
-        <div class="mdc-notched-outline__trailing"></div>
+        <label for="another-basic-switch">off/on</label>
       </div>
     </div>
-  </div>
-
-  <div>
-    <div class="mdc-text-field">
-      <input type="text" id="my-text-field" class="mdc-text-field__input">
-      <label class="mdc-floating-label" for="my-text-field">My Label</label>
-      <div class="mdc-line-ripple"></div>
+    <div>
+      <div class="mdc-text-field">
+        <input class="mdc-text-field__input" type="text" id="input" required="false">
+        <label for="input" class="mdc-floating-label">Input Label</label>
+        <div class="mdc-line-ripple"></div>
+      </div>
+      <div class="mdc-text-field-helper-line">
+        <div class="mdc-text-field-helper-text">helper text</div>
+      </div>
     </div>
-    <div class="mdc-text-field-helper-line">
-      <div class="mdc-text-field-helper-text">helper text</div>
+
+    <div>
+      <div class="mdc-text-field mdc-text-field--fullwidth">
+        <input class="mdc-text-field__input" type="text" placeholder="Full-Width Text Field"
+          aria-label="Full-Width Text Field">
+        <div class="mdc-line-ripple"></div>
+      </div>
     </div>
-  </div>
-  <div>
-      <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-          <input class="mdc-text-field__input" type="text" id="input">
-          <label for="input" class="mdc-floating-label">Input Label</label>
-          <div class="mdc-line-ripple"></div>
+
+    <div>
+      <div class="mdc-text-field mdc-text-field--textarea">
+        <textarea id="textarea" class="mdc-text-field__input" rows="8" cols="40"></textarea>
+        <div class="mdc-notched-outline">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch">
+            <label for="textarea" class="mdc-floating-label">Textarea Label</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
         </div>
-  </div>
-  <div>
+      </div>
+    </div>
+
+    <div>
+      <div class="mdc-text-field">
+        <input type="text" id="my-text-field" class="mdc-text-field__input">
+        <label class="mdc-floating-label" for="my-text-field">My Label</label>
+        <div class="mdc-line-ripple"></div>
+      </div>
+      <div class="mdc-text-field-helper-line">
+        <div class="mdc-text-field-helper-text">helper text</div>
+      </div>
+    </div>
+    <div>
       <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-          <input class="mdc-text-field__input" type="text" id="input">
-          <label for="input" class="mdc-floating-label">Input Label</label>
-          <div class="mdc-line-ripple"></div>
-        </div>
-  </div>
-  
+        <input class="mdc-text-field__input" type="text" id="input">
+        <label for="input" class="mdc-floating-label">Input Label</label>
+        <div class="mdc-line-ripple"></div>
+      </div>
+    </div>
+    <div>
+      <div class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+        <input class="mdc-text-field__input" type="text" id="input">
+        <label for="input" class="mdc-floating-label">Input Label</label>
+        <div class="mdc-line-ripple"></div>
+      </div>
+    </div>
 
 
-  <div>
+
+    <div>
       <div class="mdc-select">
         <select class="mdc-select__native-control">
           <option value="grains">
@@ -149,7 +196,7 @@
     </div>
 
 
-  <!-- <div>
+    <!-- <div>
       <div class="mdc-menu mdc-menu-surface">
           <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
             <li class="mdc-list-item" role="menuitem">
@@ -162,57 +209,59 @@
         </div>
   </div> -->
 
-  
-  <div>
-    <div class="mdc-select">
-      <input type="hidden" name="enhanced-select">
-      <i class="mdc-select__dropdown-icon"></i>
-      <div class="mdc-select__selected-text">Vegetables</div>
-      <div class="mdc-select__menu mdc-menu mdc-menu-surface">
-        <ul class="mdc-list">
-          <li class="mdc-list-item" data-value=""></li>
-          <li class="mdc-list-item" data-value="grains">
-            Bread, Cereal, Rice, and Pasta
-          </li>
-          <li class="mdc-list-item mdc-list-item--selected mdc-list-item--disabled" data-value="vegetables">
-            Vegetables
-          </li>
-          <li class="mdc-list-item" data-value="fruit">
-            Fruit
-          </li>
-        </ul>
-      </div>
-      <span class="mdc-floating-label mdc-floating-label--float-above">Pick a Food Group</span>
-      <div class="mdc-line-ripple"></div>
-    </div>
-  </div>
 
-  <div>
-    <div class="mdc-select mdc-select--with-leading-icon">
-      <i class="material-icons mdc-select__icon">event</i>
-      <input type="hidden" name="enhanced-select">
-      <i class="mdc-select__dropdown-icon"></i>
-      <div id="demo-selected-text" class="mdc-select__selected-text" role="button" aria-haspopup="listbox" aria-labelledby="demo-label demo-selected-text">Vegetables</div>
-      <div class="mdc-select__menu mdc-menu mdc-menu-surface" role="listbox">
-        <ul class="mdc-list">
-          <li class="mdc-list-item" data-value="" role="option"></li>
-          <li class="mdc-list-item mdc-list-item--selected" data-value="grains" role="option">
-            Bread, Cereal, Rice, and Pasta
-          </li>
-          <li class="mdc-list-item mdc-list-item--disabled" data-value="vegetables" aria-selected="true" aria-disabled="true" role="option">
-            Vegetables
-          </li>
-          <li class="mdc-list-item" data-value="fruit" role="option">
-            Fruit
-          </li>
-        </ul>
+    <div>
+      <div class="mdc-select">
+        <input type="hidden" name="enhanced-select">
+        <i class="mdc-select__dropdown-icon"></i>
+        <div class="mdc-select__selected-text">Vegetables</div>
+        <div class="mdc-select__menu mdc-menu mdc-menu-surface">
+          <ul class="mdc-list">
+            <li class="mdc-list-item" data-value=""></li>
+            <li class="mdc-list-item" data-value="grains">
+              Bread, Cereal, Rice, and Pasta
+            </li>
+            <li class="mdc-list-item mdc-list-item--selected mdc-list-item--disabled" data-value="vegetables">
+              Vegetables
+            </li>
+            <li class="mdc-list-item" data-value="fruit">
+              Fruit
+            </li>
+          </ul>
+        </div>
+        <span class="mdc-floating-label mdc-floating-label--float-above">Pick a Food Group</span>
+        <div class="mdc-line-ripple"></div>
       </div>
-      <span id="demo-label" class="mdc-floating-label mdc-floating-label--float-above">Pick a Food Group</span>
-      <div class="mdc-line-ripple"></div>      
     </div>
-  </div>
 
-  <div>
+    <div>
+      <div class="mdc-select mdc-select--with-leading-icon">
+        <i class="material-icons mdc-select__icon">event</i>
+        <input type="hidden" name="enhanced-select">
+        <i class="mdc-select__dropdown-icon"></i>
+        <div id="demo-selected-text" class="mdc-select__selected-text" role="button" aria-haspopup="listbox"
+          aria-labelledby="demo-label demo-selected-text">Vegetables</div>
+        <div class="mdc-select__menu mdc-menu mdc-menu-surface" role="listbox">
+          <ul class="mdc-list">
+            <li class="mdc-list-item" data-value="" role="option"></li>
+            <li class="mdc-list-item mdc-list-item--selected" data-value="grains" role="option">
+              Bread, Cereal, Rice, and Pasta
+            </li>
+            <li class="mdc-list-item mdc-list-item--disabled" data-value="vegetables" aria-selected="true"
+              aria-disabled="true" role="option">
+              Vegetables
+            </li>
+            <li class="mdc-list-item" data-value="fruit" role="option">
+              Fruit
+            </li>
+          </ul>
+        </div>
+        <span id="demo-label" class="mdc-floating-label mdc-floating-label--float-above">Pick a Food Group</span>
+        <div class="mdc-line-ripple"></div>
+      </div>
+    </div>
+
+    <div>
       <ul class="mdc-list">
         <li class="mdc-list-item" tabindex="0">
           <span class="mdc-list-item__text">Single-line item</span>
@@ -224,58 +273,58 @@
           <span class="mdc-list-item__text">Single-line item</span>
         </li>
       </ul>
-  </div>
+    </div>
 
-  <div>
-    <ul class="mdc-list mdc-list--two-line">
-      <li class="mdc-list-item" tabindex="0">
-        <span class="mdc-list-item__text">
-          <span class="mdc-list-item__primary-text">First-line text</span>
-          <span class="mdc-list-item__secondary-text">Second-line text</span>
-        </span>
-      </li>
-      <li class="mdc-list-item">
-        <span class="mdc-list-item__text">
-          <span class="mdc-list-item__primary-text">First-line text</span>
-          <span class="mdc-list-item__secondary-text">Second-line text</span>
-        </span>
-      </li>
-      <li class="mdc-list-item">
-        <span class="mdc-list-item__text">
-          <span class="mdc-list-item__primary-text">First-line text</span>
-          <span class="mdc-list-item__secondary-text">Second-line text</span>
-        </span>
-      </li>
-    </ul>
-  </div>
-
-  <div>
-    <div class="mdc-list-group">
-      <h3 class="mdc-list-group__subheader">List 1</h3>
-      <ul class="mdc-list">
+    <div>
+      <ul class="mdc-list mdc-list--two-line">
         <li class="mdc-list-item" tabindex="0">
-          <span class="mdc-list-item__text">line item</span>
+          <span class="mdc-list-item__text">
+            <span class="mdc-list-item__primary-text">First-line text</span>
+            <span class="mdc-list-item__secondary-text">Second-line text</span>
+          </span>
         </li>
         <li class="mdc-list-item">
-          <span class="mdc-list-item__text">line item</span>
+          <span class="mdc-list-item__text">
+            <span class="mdc-list-item__primary-text">First-line text</span>
+            <span class="mdc-list-item__secondary-text">Second-line text</span>
+          </span>
         </li>
         <li class="mdc-list-item">
-          <span class="mdc-list-item__text">line item</span>
-        </li>
-      </ul>
-      <h3 class="mdc-list-group__subheader">List 2</h3>
-      <ul class="mdc-list">
-        <li class="mdc-list-item">
-          <span class="mdc-list-item__text">line item</span>
-        </li>
-        <li class="mdc-list-item">
-          <span class="mdc-list-item__text">line item</span>
-        </li>
-        <li class="mdc-list-item">
-          <span class="mdc-list-item__text">line item</span>
+          <span class="mdc-list-item__text">
+            <span class="mdc-list-item__primary-text">First-line text</span>
+            <span class="mdc-list-item__secondary-text">Second-line text</span>
+          </span>
         </li>
       </ul>
     </div>
-  </div>
+
+    <div>
+      <div class="mdc-list-group">
+        <h3 class="mdc-list-group__subheader">List 1</h3>
+        <ul class="mdc-list">
+          <li class="mdc-list-item" tabindex="0">
+            <span class="mdc-list-item__text">line item</span>
+          </li>
+          <li class="mdc-list-item">
+            <span class="mdc-list-item__text">line item</span>
+          </li>
+          <li class="mdc-list-item">
+            <span class="mdc-list-item__text">line item</span>
+          </li>
+        </ul>
+        <h3 class="mdc-list-group__subheader">List 2</h3>
+        <ul class="mdc-list">
+          <li class="mdc-list-item">
+            <span class="mdc-list-item__text">line item</span>
+          </li>
+          <li class="mdc-list-item">
+            <span class="mdc-list-item__text">line item</span>
+          </li>
+          <li class="mdc-list-item">
+            <span class="mdc-list-item__text">line item</span>
+          </li>
+        </ul>
+      </div>
+    </div>
 
 </template>
