@@ -46,6 +46,7 @@ export function configure(aurelia: Aurelia): void {
     // })
     .feature(PLATFORM.moduleName('logofx/index'))
     .feature(PLATFORM.moduleName('model/index'))
+    .feature(PLATFORM.moduleName('data/index'))
     .feature(PLATFORM.moduleName('resources/index'));
 
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-i18n'), (instance) => {

@@ -3,8 +3,8 @@
 
 import { DialogController, DialogService, DialogCancelableOperationResult } from 'aurelia-dialog';
 import { ObjectViewModel, EditableObjectViewModel } from 'logofx';
-import { IContact, Contact as ContactModel } from 'model';
-import { autoinject } from 'aurelia-framework';
+import { IContact, Contact as ContactModel, DataService } from 'model';
+import { autoinject, transient } from 'aurelia-framework';
 import { MdcValidationRenderer } from 'resources/mdc-components';
 import { resolve } from 'path';
 
@@ -12,13 +12,14 @@ import { resolve } from 'path';
  * Represents Contact view model.
  */
 @autoinject
+@transient(Contact)
 export class Contact extends EditableObjectViewModel<ContactModel> {
 
-  constructor(model: ContactModel, private dialogService: DialogService) {
+  constructor(model: ContactModel, private dataService: DataService,  private dialogService: DialogService) {
     super(model);
 
     this.validationController.addRenderer(new MdcValidationRenderer());
-    this.model.beginEdit();
+    this.beginEdit();
   }
 
   public get canExecuteOk(): boolean {
@@ -26,12 +27,7 @@ export class Contact extends EditableObjectViewModel<ContactModel> {
   }
 
   public ok(): void {
-    this.validationController.validate().then(validation => {
-      if (validation.valid) {
-        this.save(this.model)
-          .then(() => this.dialogService.controllers[0].ok(this.model));
-      }
-    });
+    this.endEdit();
   }
 
   public cancel(): void {
@@ -40,15 +36,18 @@ export class Contact extends EditableObjectViewModel<ContactModel> {
   }
 
   protected async save(model: ContactModel): Promise<any> {
-    alert('saved! ' + this.model.toString());
+    //throw new Error('HUJNYA');
+
+    await this.dataService.updateContact(model);
+    //alert('saved! ' + this.model.toString());
   }
-  protected afterSave(model: ContactModel): Promise<any> {
+  protected async afterSave(model: ContactModel): Promise<any> {
+    return this.dialogService.controllers[0].ok(this.model);
+  }
+  protected async discard(model: ContactModel): Promise<any> {
     throw new Error("Method not implemented.");
   }
-  protected discard(model: ContactModel): Promise<any> {
-    throw new Error("Method not implemented.");
-  }
-  protected showError(error: any): Promise<any> {
-    throw new Error("Method not implemented.");
+  protected async showError(error: any): Promise<any> {
+    alert(error.message);
   }
 }

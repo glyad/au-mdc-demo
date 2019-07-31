@@ -1,8 +1,7 @@
 import { ObserverLocator } from 'aurelia-binding';
 import { Container, BindingEngine } from 'aurelia-framework';
-import { isUndefined } from 'logofx';
-import { isNullOrUndefined } from 'util';
 
+export * from './guid';
 
 export function getDefaultBindingEngine(): BindingEngine {
     return <BindingEngine>Container.instance.get(BindingEngine);
@@ -16,12 +15,10 @@ declare global {
   interface StringConstructor {
     empty: string;
     isEmptyOrWhitespace(s: string): boolean;
-    
 }}
 
 String.empty = ''.toString();
 
-String.isEmptyOrWhitespace = function(s: string): boolean {
+String.isEmptyOrWhitespace = (s: string): boolean => {
   return (s !== undefined && s !== null) && s.trim().length === 0;
-}
-
+};

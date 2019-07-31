@@ -65,8 +65,9 @@ export class Model<T> implements IModel<T> {
  */
 export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
 
+  private _newGuard: boolean;
   private _isDirty: boolean = false;
-  private _isNew: boolean = true;
+  private _isNew: boolean = false;
   private _originalState: IEditableModel<T>;
 
   constructor() {
@@ -110,6 +111,12 @@ export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
   public commitEdit(): void {
     this.cleanDirty();
     //throw new Error("Method not implemented.");
+  }
+
+  protected makeNew(): void {
+    if (!this._newGuard) {
+      this._newGuard = this._isNew = true;
+    }
   }
 
   private clone(model: IEditableModel<T>): IEditableModel<T> {

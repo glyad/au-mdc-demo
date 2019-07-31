@@ -14,19 +14,11 @@ export abstract class EditableObjectViewModel<T extends IEditableModel<any>> ext
       super(model);
     }
 
-    
-
-    get isDirty(): boolean {
-      return this.model.isDirty;
-    }
-    set isDirty(value: boolean) {
-          //TODO: For some unknown reason the following line
-          //fails to work - restore when the reason is clear
-          //value ? this.model.makeDirty() : this.model.cleanDirty();
-          this.model.isDirty = value;
-    }
-
     public canCancelChanges: boolean;
+
+    public beginEdit(): void {
+      this.model.beginEdit();
+    }
 
     public cancelEdit(): void {
         //this.copyModel(this.originalModel);
@@ -34,14 +26,19 @@ export abstract class EditableObjectViewModel<T extends IEditableModel<any>> ext
     }
 
     public endEdit(): void {
-        // this.save(this.model).then(() => {
-        //                            //TODO: For some unknown reason the following line
-        //                            //fails to work - restore when the reason is clear
-        //                            //this.model.CleanDirty();
-        //                            this.isDirty = false;
-        //                            // tslint:disable-next-line: no-floating-promises
-        //                            this.afterSave(this.model);
-        //                     },     this.showError);
+      this.validationController.validate().then(async validation => {
+        if (!validation.valid) {
+          throw new Error(validation.results.toString());
+        } else {
+          await this.save(this.model)
+          .then(() => {
+            this.model.cleanDirty();
+          })
+          .then(async () => this.afterSave(this.model));
+        }
+      }).catch(async error => {
+        await this.showError(error);
+      });
     }
 
     protected async abstract save(model: T): Promise<any>;

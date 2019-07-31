@@ -4,5 +4,8 @@ export interface IDataService {
 
   contacts: IContact[];
 
-  getContacts(): void;
+  createContact(): Promise<IContact>;
+  getContacts(): Promise<IContact[]>;
+  updateContact(model: IContact): Promise<IContact>;
+  deleteContact(model: IContact): Promise<void>;
 }
