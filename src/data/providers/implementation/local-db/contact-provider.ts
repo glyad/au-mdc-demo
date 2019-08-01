@@ -1,6 +1,9 @@
-import { DB_NAME } from './index';
-import { IContactProvider, ContactDto } from 'data';
-//import { defaults as PouchDB } from 'pouchdb-browser';
+import { IContactProvider, ContactDto, DB_NAME } from 'data';
+
+// tslint:disable: variable-name
+// tslint:disable: no-var-requires
+// tslint:disable-next-line: no-require-imports
+const PouchDB = require('pouchdb-browser').default;
 
 /**
  * ContactProvider
@@ -8,46 +11,45 @@ import { IContactProvider, ContactDto } from 'data';
 export class ContactProvider implements IContactProvider {
 
   public get(id?: string): ContactDto[] {
-    const contacts: ContactDto[] = new Array<ContactDto>();
-    const PouchDB = require('pouchdb-browser').default;
-    const db = new PouchDB(DB_NAME);
 
+    const contacts: ContactDto[] = [];
+
+    const db = new PouchDB(DB_NAME);
     db.allDocs({
       include_docs: true,
       attachments: true})
-      .then(result => {
+      .then((result: { rows: any[] }) => {
 
-        (<any[]>result.rows).forEach(row => {
+        result.rows.forEach(row => {
           const contactDto: ContactDto = new ContactDto();
           contactDto.id = row.doc.id;
           contactDto.firstName = row.doc.firstName;
           contactDto.lastName = row.doc.lastName;
           contactDto.email = row.doc.email;
-          //alert(JSON.stringify(contactDto));
           contacts.push(contactDto);
         });
       })
       .catch(alert);
-    //alert(JSON.stringify(contacts));
+
     return contacts;
   }
 
   public async getAsync(id?: string): Promise<ContactDto[]> {
-    const contacts: ContactDto[] = new Array<ContactDto>();
-    const PouchDB = require('pouchdb-browser').default;
+
+    const contacts: ContactDto[] = [];
+
     const db = new PouchDB(DB_NAME);
     await db.allDocs({
       include_docs: true,
       attachments: true})
-      .then(result => {
+      .then((result: { rows: any[] }) => {
 
-        (<any[]>result.rows).forEach(row => {
+        result.rows.forEach(row => {
           const contactDto: ContactDto = new ContactDto();
           contactDto.id = row.doc.id;
           contactDto.firstName = row.doc.firstName;
           contactDto.lastName = row.doc.lastName;
           contactDto.email = row.doc.email;
-          //alert(JSON.stringify(contactDto));
           contacts.push(contactDto);
         });
       })
@@ -57,7 +59,7 @@ export class ContactProvider implements IContactProvider {
   }
 
   public post(contactDto: ContactDto): void {
-    const PouchDB = require('pouchdb-browser').default;
+
     const db = new PouchDB(DB_NAME);
     db.put({
       _id: contactDto.id,
@@ -74,7 +76,7 @@ export class ContactProvider implements IContactProvider {
   }
 
   public put(contactDto: ContactDto): void {
-    const PouchDB = require('pouchdb-browser').default;
+
     const db = new PouchDB(DB_NAME);
     db.get(contactDto.id).then(doc => {
       return db.put({

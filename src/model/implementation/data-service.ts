@@ -1,4 +1,4 @@
-import { ContactProvider, ContactDto } from 'data';
+import { ContactDto, ContactProvider } from 'data';
 import { IDataService, IContact } from 'model';
 import { Contact } from '.';
 import { Guid } from 'logofx';
