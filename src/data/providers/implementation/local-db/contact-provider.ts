@@ -69,7 +69,7 @@ export class ContactProvider implements IContactProvider {
       email: contactDto.email
     })
       .then(response => {
-        alert(`Responce ID is ${response.id}.\n Revision: ${response.rev}.`);
+        // alert(`Responce ID is ${response.id}.\n Revision: ${response.rev}.`);
       }).catch (reason => {
         alert(`Reason is ${reason}`);
       });

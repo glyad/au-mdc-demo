@@ -7,6 +7,7 @@ import { ViewModelCreatorService, Guid } from 'logofx';
 import { EditContact } from './edit-contact';
 import { autoinject, transient, View } from "aurelia-framework";
 import { DialogService, DialogController } from "aurelia-dialog";
+import { MDCCheckbox } from '@material/checkbox';
 
 /**
  * Contacts view model.
@@ -31,10 +32,56 @@ export class Contacts {
   }
 
   public get contacts(): WrappingCollection {
+    if (this._wcContacts !== undefined) {
+      return this._wcContacts.sort((leftSide: ContactViewModel, rightSide: ContactViewModel): number => {
+                if (leftSide.model.firstName > rightSide.model.firstName) return 1;
+                if (leftSide.model.firstName < rightSide.model.firstName) return -1;
+                return 0;
+              });
+    }
 
     return this._wcContacts;
   }
 
+  public get canSelectAll(): boolean {
+    return this.contacts.canSelectAll();
+  }
+
+  public selectAll(): void {
+    this.contacts.selectAll();
+  }
+
+  public get selectionState(): any {
+    if (this.contacts === undefined)
+      return false;
+    const checkbox = new MDCCheckbox(document.querySelector('#selectionStateCheckbox'));
+
+    const vmLength = this.contacts.length;
+    const selectedLength = this.contacts.getSelectedItems().length;
+
+    if ((this.contacts.length > this.contacts.getSelectedItems().length)
+          && (this.contacts.getSelectedItems().length > 0)) {
+            checkbox.indeterminate = true;
+            return undefined;
+          }
+    if (this.contacts.length === this.contacts.getSelectedItems().length) {
+      checkbox.indeterminate = false;
+      return true;
+    }
+
+    if (this.contacts.getSelectedItems().length === 0) {
+      checkbox.indeterminate = false;
+      return false;
+    }
+  }
+
+  public set selectionState (value: any) {
+    if (value) {
+      this.contacts.selectAll();
+    } else {
+      this.contacts.unselectAll();
+    }
+  }
   /**
    * Opens the dialog for editing new contact item.
    */
