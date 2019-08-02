@@ -8,6 +8,8 @@ export interface IModel<T> {
     validationRules: FluentRuleCustomizer<IModel<T>, any>;
 
     rules: Rule<{}, any>[][];
+
+    [x: string]: any;
 }
 
 export interface ICanBeDirty {
