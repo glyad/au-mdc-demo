@@ -32,7 +32,7 @@ export abstract class EditableObjectViewModel<T extends IEditableModel<any>> ext
         } else {
           await this.save(this.model)
           .then(() => {
-            this.model.cleanDirty();
+            this.model.commitEdit();
           })
           .then(async () => this.afterSave(this.model));
         }

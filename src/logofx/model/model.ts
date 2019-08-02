@@ -100,9 +100,10 @@ export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
 
   public beginEdit(): void {
     //if (!this.isNew)
+      this.cleanDirty();
       this._originalState = this.clone(this);
-      console.log(`Original is ` + this._originalState.toString());
-      console.log(`This is ` + this.toString());
+      // console.log(`Original is ` + this._originalState.toString());
+      // console.log(`This is ` + this.toString());
   }
 
   public cancelEdit(): void {
