@@ -34,6 +34,19 @@ export class DataService implements IDataService {
     });
   }
 
+  public async getContact(id: string): Promise<IContact> {
+    return new Promise<IContact>(async resolve => {
+      const contactDtos: ContactDto[] = await this.contactProvider.getAsync(id);
+      const contact: IContact = new Contact();
+      contact.id = contactDtos[0].id;
+      contact.firstName = contactDtos[0].firstName;
+      contact.lastName = contactDtos[0].lastName;
+      contact.email = contactDtos[0].email;
+      contact._rev = contactDtos[0]._rev;
+      resolve(contact);
+    });
+  }
+
   public async getContacts(): Promise<IContact[]> {
     await this.updateLocalContacts();
     return new Promise(resolve => {
@@ -42,37 +55,51 @@ export class DataService implements IDataService {
   }
 
   public async updateContact(model: IContact): Promise<IContact> {
-    if (model.isNew) {
-      const dto: ContactDto = new ContactDto();
-      dto.id = model.id;
-      dto.firstName = model.firstName;
-      dto.lastName = model.lastName;
-      dto.email = model.email;
-
-      this.contactProvider.post(dto);
+    const dto: ContactDto = new ContactDto();
+    dto.id = model.id;
+    dto.firstName = model.firstName;
+    dto.lastName = model.lastName;
+    dto.email = model.email;
+    if (!model.isNew) {
+      dto._rev = model._rev;
+      await this.contactProvider.putAsync(dto)
+              .then(() => this.updateLocalContacts())
+              .catch(error => {
+                throw error;
+              });
+    } else {
+      await this.contactProvider.postAsync(dto)
+              .then(() => this.updateLocalContacts())
+              .catch(error => {
+                throw error;
+              });
     }
-    await this.updateLocalContacts();
-    return new Contact();
+
+    return this.contacts.find(c => c.id === model.id);
   }
 
   public async deleteContact(model: IContact): Promise<void> {
-    return new Promise(resolve => {
-      resolve(null);
-    });
+      await this.contactProvider
+        .deleteAsync(model.id)
+        .then(async () => {
+          await this.updateLocalContacts();
+        })
+        .catch(err => {
+            throw err;
+        });
   }
 
   private async updateLocalContacts(): Promise<void> {
     this.contacts.splice(0, this.contacts.length);
 
     (await this.contactProvider.getAsync()).forEach(dto => {
-      const model: Contact = new Contact();
+      const model: IContact = new Contact();
       model.id = dto.id;
       model.firstName = dto.firstName;
       model.lastName = dto.lastName;
       model.email = dto.email;
-
+      model._rev = dto._rev;
       this.contacts.push(model);
-      //alert(JSON.stringify(this.contacts));
     });
 
   }

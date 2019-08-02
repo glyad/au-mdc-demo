@@ -8,6 +8,8 @@ import { EditContact } from './edit-contact';
 import { autoinject, transient, View } from "aurelia-framework";
 import { DialogService, DialogController } from "aurelia-dialog";
 import { MDCCheckbox } from '@material/checkbox';
+import { MDCDrawer } from "@material/drawer";
+import { Compose } from 'aurelia-templating-resources';
 
 /**
  * Contacts view model.
@@ -17,6 +19,8 @@ import { MDCCheckbox } from '@material/checkbox';
 export class Contacts {
 
   private _wcContacts: WrappingCollection;
+  private _drawer: MDCDrawer;
+  private site: any;
 
   // tslint:disable: no-parameter-properties
   constructor(private dataService: DataService,
@@ -31,6 +35,10 @@ export class Contacts {
     });
   }
 
+  public attached(): void {
+    this._drawer = MDCDrawer.attachTo(document.querySelector('#right-drawer'));
+  }
+
   public get contacts(): WrappingCollection {
     if (this._wcContacts !== undefined) {
       return this._wcContacts.sort((leftSide: ContactViewModel, rightSide: ContactViewModel): number => {
@@ -41,6 +49,34 @@ export class Contacts {
     }
 
     return this._wcContacts;
+  }
+
+  public openRightSideDrawer(id?: string): void {
+    this.site = this.contacts.find((c: ContactViewModel) => c.model.id === id);
+    this._drawer.open = true;
+  }
+
+  public async editContact(id?: string): Promise<any> {
+
+    const contact = await this.dataService.getContact(id);
+
+    //console.log('Edit ', contact);
+    await this.windowManager.show(this.viewModelCreatorService.create<ContactViewModel>(ContactViewModel, contact))
+    // .then(a => {
+    //   // Do something, if need
+    // })
+    .catch(err => {
+      alert(err);
+    })
+    .finally(() => {
+      // alert('Всё заебись!');
+    });
+  }
+
+  public async deleteContact(id?: string): Promise<any> {
+    const contact = this.contacts.find((c: ContactViewModel) => c.model.id === id).model;
+
+    await this.dataService.deleteContact(contact);
   }
 
   public get canSelectAll(): boolean {

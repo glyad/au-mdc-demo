@@ -1,12 +1,9 @@
-
-import { ContactDto } from '../../dto';
+import { ContactDto } from 'dto';
 
 export interface IContactProvider {
 
-  get(id?: string): ContactDto[];
-  getAsync(id?: string): Promise<ContactDto[]>;
-  post(contactDto: ContactDto): void;
-  put(contactDto: ContactDto): void;
-  patch(contactDto: ContactDto): void;
-  delete(id?: string): void;
+  getAsync(id?: string): Promise<ContactDto[]> | Promise<ContactDto>;
+  postAsync(contactDto: ContactDto): Promise<void>;
+  putAsync(contactDto: ContactDto): Promise<void>;
+  deleteAsync(id?: string): Promise<void>;
 }

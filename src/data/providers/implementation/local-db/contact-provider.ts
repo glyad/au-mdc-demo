@@ -10,95 +10,81 @@ const PouchDB = require('pouchdb-browser').default;
  */
 export class ContactProvider implements IContactProvider {
 
-  public get(id?: string): ContactDto[] {
+public async getAsync(id?: string): Promise<ContactDto[]> {
 
     const contacts: ContactDto[] = [];
 
     const db = new PouchDB(DB_NAME);
-    db.allDocs({
-      include_docs: true,
-      attachments: true})
-      .then((result: { rows: any[] }) => {
 
-        result.rows.forEach(row => {
-          const contactDto: ContactDto = new ContactDto();
-          contactDto.id = row.doc.id;
-          contactDto.firstName = row.doc.firstName;
-          contactDto.lastName = row.doc.lastName;
-          contactDto.email = row.doc.email;
-          contacts.push(contactDto);
-        });
-      })
-      .catch(alert);
+    if (id) {
+      await db.get(id)
+      .then((doc: any) => {
+        const contactDto: ContactDto = new ContactDto();
+        contactDto.id = doc.id;
+        contactDto.firstName = doc.firstName;
+        contactDto.lastName = doc.lastName;
+        contactDto.email = doc.email;
+        contactDto._rev = doc._rev;
+        contacts.push(contactDto);
+      });
+    } else {
+        await db.allDocs({
+                        include_docs: true,
+                        attachments: true})
+                .then((result: { rows: any[] }) => {
 
-    return contacts;
-  }
-
-  public async getAsync(id?: string): Promise<ContactDto[]> {
-
-    const contacts: ContactDto[] = [];
-
-    const db = new PouchDB(DB_NAME);
-    await db.allDocs({
-      include_docs: true,
-      attachments: true})
-      .then((result: { rows: any[] }) => {
-
-        result.rows.forEach(row => {
-          const contactDto: ContactDto = new ContactDto();
-          contactDto.id = row.doc.id;
-          contactDto.firstName = row.doc.firstName;
-          contactDto.lastName = row.doc.lastName;
-          contactDto.email = row.doc.email;
-          contacts.push(contactDto);
-        });
-      })
-      .catch(alert);
+                  result.rows.forEach(row => {
+                    const contactDto: ContactDto = new ContactDto();
+                    contactDto.id = row.doc.id;
+                    contactDto.firstName = row.doc.firstName;
+                    contactDto.lastName = row.doc.lastName;
+                    contactDto.email = row.doc.email;
+                    contactDto._rev = row.doc._rev;
+                    contacts.push(contactDto);
+                  });
+                })
+                .catch(alert);
+    }
 
     return contacts;
   }
 
-  public post(contactDto: ContactDto): void {
-
+  public async postAsync(contactDto: ContactDto): Promise<void> {
     const db = new PouchDB(DB_NAME);
-    db.put({
+    await db.put({
       _id: contactDto.id,
       id: contactDto.id,
       firstName: contactDto.firstName,
       lastName: contactDto.lastName,
       email: contactDto.email
     })
-      .then(response => {
-        // alert(`Responce ID is ${response.id}.\n Revision: ${response.rev}.`);
-      }).catch (reason => {
-        alert(`Reason is ${reason}`);
-      });
+    .catch (error => {
+      throw error;
+    });
   }
 
-  public put(contactDto: ContactDto): void {
-
+  public async putAsync(contactDto: ContactDto): Promise<void> {
     const db = new PouchDB(DB_NAME);
-    db.get(contactDto.id).then(doc => {
-      return db.put({
+
+    await db.get(contactDto.id).then(doc => {
+      db.put({
         _id: contactDto.id,
-        _rev: doc._rev,
+        _rev: contactDto._rev,
         id: contactDto.id,
         firstName: contactDto.firstName,
         lastName: contactDto.lastName,
         email: contactDto.email
       });
-    }).then(response => {
-      // handle response
-    }).catch(err => {
-      console.log(err);
+    })
+    .catch(error => {
+      throw error;
     });
   }
 
-  public patch(contactDto: ContactDto): void {
-    throw new Error("Method not implemented.");
-  }
-
-  public delete(id ? : string): void {
-    throw new Error("Method not implemented.");
+  public async deleteAsync(id : string): Promise<void> {
+    const db = new PouchDB(DB_NAME);
+    await db.get(id).then(doc => {
+      db.remove(doc);
+    });
   }
 }
