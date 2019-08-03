@@ -2,6 +2,8 @@
 import { IEditableModel } from 'logofx/model';
 import { jsonClone } from 'logofx/utils';
 import { ObjectViewModel } from './objectViewModel';
+import { ValidationControllerFactory } from 'aurelia-validation';
+import { Container } from 'aurelia-framework';
 
 /**
  * EditableObjectViewModel

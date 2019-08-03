@@ -1,11 +1,9 @@
-import { Rule, FluentRuleCustomizer } from 'aurelia-validation';
+import { Rule, FluentRuleCustomizer, ValidationRules } from 'aurelia-validation';
 import { makeString } from 'logofx';
 import { deepClone } from 'logofx/utils';
 
 export interface IModel<T> {
     id: T;
-
-    validationRules: FluentRuleCustomizer<IModel<T>, any>;
 
     rules: Rule<{}, any>[][];
 
@@ -41,8 +39,6 @@ export class Model<T> implements IModel<T> {
 
     public id: T;
 
-    //Made public for seralization during cloning/spreading
-    public validationRules: FluentRuleCustomizer<IModel<T>, any>;
     private _rules: Rule<{}, any>[][];
 
     public get rules(): Rule<{}, any>[][] {

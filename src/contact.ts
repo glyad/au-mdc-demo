@@ -1,12 +1,12 @@
 // tslint:disable: no-floating-promises
 // tslint:disable: no-parameter-properties
 
+import { Validator, validateTrigger, ValidationRules, ValidationControllerFactory, ValidationController } from 'aurelia-validation';
 import { DialogService } from 'aurelia-dialog';
 import { EditableObjectViewModel } from 'logofx';
 import { Contact as ContactModel, DataService } from 'model';
-import { autoinject, transient } from 'aurelia-framework';
+import { autoinject, transient, Container } from 'aurelia-framework';
 import { MdcValidationRenderer } from 'resources/mdc-components';
-import { validateTrigger } from 'aurelia-validation';
 
 /**
  * Represents Contact view model.
@@ -15,11 +15,12 @@ import { validateTrigger } from 'aurelia-validation';
 @transient(Contact)
 export class Contact extends EditableObjectViewModel<ContactModel> {
 
+  private _canSave: boolean = false;
+
   constructor(model: ContactModel, private dataService: DataService,  private dialogService: DialogService) {
     super(model);
 
     this.validationController.addRenderer(new MdcValidationRenderer());
-    this.validationController.changeTrigger(validateTrigger.changeOrBlur);
   }
 
   public get canExecuteOk(): boolean {

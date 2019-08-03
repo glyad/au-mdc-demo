@@ -1,5 +1,5 @@
 import { Container, bindable } from 'aurelia-framework';
-import { ValidationController, ValidationControllerFactory } from 'aurelia-validation';
+import { ValidationController, validateTrigger } from 'aurelia-validation';
 import { IModel } from '../model';
 
 export interface IObjectWrapper<T extends IModel<any>> {
@@ -50,10 +50,10 @@ export abstract class ObjectViewModel<T extends IModel<any>> implements IObjectV
   }
 
   constructor(model: T) {
-      this.model = model;
+    this.model = model;
 
-      const controllerFactory: ValidationControllerFactory = Container.instance.get(ValidationControllerFactory);
-      this.validationController = controllerFactory.createForCurrentScope();
+    this.validationController = Container.instance.get(ValidationController);
+    this.validationController.changeTrigger(validateTrigger.changeOrBlur);
   }
 
 }

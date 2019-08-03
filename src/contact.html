@@ -14,7 +14,7 @@
               <div class="mdc-layout-grid__cell">
                 <div>
                   <div class="mdc-text-field">
-                    <input id="firstName" value.bind="model.firstName & validate:model.rules" type="text"
+                    <input id="firstName" validation-errors.bind="firstNameErrors" value.bind="model.firstName & validate:model.rules" type="text"
                       class="mdc-text-field__input" aria-controls="firstName-helper-text"
                       aria-describedby="firstName-helper-text" attach-focus />
                     <label class="mdc-floating-label" for="firstName">First Name*</label>
@@ -23,7 +23,7 @@
                   <div class="mdc-text-field-helper-line">
                     <div id="firstName-helper-text"
                       class="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg" aria-hidden="true">
-                      <span repeat.for="error of validationController.errors">${error.message}</span>
+                      <span repeat.for="errorInfo of firstNameErrors">${errorInfo.error.message}</span>
                     </div>
                   </div>
                 </div>
@@ -31,7 +31,7 @@
               <div class="mdc-layout-grid__cell">                
                     <div>
                       <div class="mdc-text-field">
-                        <input id="lastName" value.two-way="model.lastName & validate:model.rules" type="text"
+                        <input id="lastName" validation-errors.bind="lastNameErrors" value.two-way="model.lastName & validate:model.rules" type="text"
                           class="mdc-text-field__input" aria-controls="lastName-helper-text"
                           aria-describedby="lastName-helper-text" />
                         <label class="mdc-floating-label" for="lastName">Last Name*</label>
@@ -41,7 +41,7 @@
                         <div id="lastName-helper-text"
                           class="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg"
                           aria-hidden="true">
-                          <span repeat.for="error of validationController.errors">${error.message}</span>
+                          <span repeat.for="errorInfo of lastNameErrors">${errorInfo.error.message}</span>
                         </div>
                       </div>
                 </div>

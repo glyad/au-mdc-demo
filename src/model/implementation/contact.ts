@@ -47,11 +47,14 @@ export class Contact extends EditableModel<string> implements IContact {
     super();
 
     this.rules = ValidationRules
+        .ensureObject()
+        .satisfies((c: Contact) => c.firstName.length > 0 && c.lastName.length > 3)
+        // .withMessage('Volume cannot be greater than 50 cubic centemeters.')
         .ensure((c: Contact) => c.firstName).displayName('First Name').required().withMessage('The value is mandatory')
         .ensure((c: Contact) => c.lastName).displayName('Last Name').required().withMessage('The value is mandatory').minLength(3).withMessage('The value < 3')
         // .ensure((c: Contact) => c.email).displayName('Email').email()
         // .ensure((c: Contact) => c.name).displayName('Phone').required().maxLength(12).withMessage('The value is mandatory. The length must be between 9 and 12')
-        .on(this)
+        //.on(this)
         .rules;
   }
 }
