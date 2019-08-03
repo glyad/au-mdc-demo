@@ -1,6 +1,5 @@
 import { ContactDto, ContactProvider } from 'data';
-import { IDataService, IContact } from 'model';
-import { Contact } from '.';
+import { IDataService, IContact, Contact } from 'model';
 import { Guid } from 'logofx';
 import { autoinject } from 'aurelia-framework';
 

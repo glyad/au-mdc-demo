@@ -60,8 +60,9 @@ export class Contacts {
 
     const contact = await this.dataService.getContact(id);
 
-    //console.log('Edit ', contact);
-    await this.windowManager.show(this.viewModelCreatorService.create<ContactViewModel>(ContactViewModel, contact))
+    const contactViewModel = this.viewModelCreatorService.create<ContactViewModel>(ContactViewModel, contact);
+    contactViewModel.beginEdit();
+    await this.windowManager.show(contactViewModel)
     // .then(a => {
     //   // Do something, if need
     // })
@@ -124,8 +125,10 @@ export class Contacts {
   public async createNewContact(): Promise<any> {
 
     const contact: Contact = await this.dataService.createContact() as Contact;
+    const contactViewModel = this.viewModelCreatorService.create<ContactViewModel>(ContactViewModel, contact);
+    contactViewModel.beginEdit();
 
-    await this.windowManager.show(this.viewModelCreatorService.create<ContactViewModel>(ContactViewModel, contact))
+    await this.windowManager.show(contactViewModel)
                             .then(a => {
                               // Do something miningfull here
                               //alert(`Was Cancelled? The answer is ${a.wasCancelled}`);

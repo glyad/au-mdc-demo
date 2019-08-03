@@ -70,6 +70,7 @@ export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
   private _newGuard: boolean;
   private _isDirty: boolean = false;
   private _isNew: boolean = false;
+  private _isEditing: boolean = false;
   private _originalState: IEditableModel<T>;
 
   constructor() {
@@ -93,7 +94,7 @@ export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
   }
 
   public makeDirty(): void {
-    this._isDirty = true;
+    this._isDirty = (true && this._isEditing);
   }
 
   public cleanDirty(): void {
@@ -102,18 +103,22 @@ export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
 
   public beginEdit(): void {
     //if (!this.isNew)
+
       this.cleanDirty();
-      this._originalState = this.clone(this);
+      this._isEditing = true;
+      // this._originalState = this.clone(this);
       // console.log(`Original is ` + this._originalState.toString());
       // console.log(`This is ` + this.toString());
   }
 
   public cancelEdit(): void {
     //this = this.clone(this._originalState);
+    this._isEditing = false;
   }
+
   public commitEdit(): void {
     this.cleanDirty();
-    //throw new Error("Method not implemented.");
+    this._isEditing = false;
   }
 
   protected makeNew(): void {

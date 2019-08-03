@@ -1,12 +1,12 @@
 // tslint:disable: no-floating-promises
 // tslint:disable: no-parameter-properties
 
-import { DialogController, DialogService, DialogCancelableOperationResult } from 'aurelia-dialog';
-import { ObjectViewModel, EditableObjectViewModel } from 'logofx';
-import { IContact, Contact as ContactModel, DataService } from 'model';
+import { DialogService } from 'aurelia-dialog';
+import { EditableObjectViewModel } from 'logofx';
+import { Contact as ContactModel, DataService } from 'model';
 import { autoinject, transient } from 'aurelia-framework';
 import { MdcValidationRenderer } from 'resources/mdc-components';
-import { resolve } from 'path';
+import { validateTrigger } from 'aurelia-validation';
 
 /**
  * Represents Contact view model.
@@ -19,7 +19,7 @@ export class Contact extends EditableObjectViewModel<ContactModel> {
     super(model);
 
     this.validationController.addRenderer(new MdcValidationRenderer());
-    this.beginEdit();
+    this.validationController.changeTrigger(validateTrigger.changeOrBlur);
   }
 
   public get canExecuteOk(): boolean {
