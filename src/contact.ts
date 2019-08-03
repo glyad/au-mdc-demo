@@ -15,12 +15,14 @@ import { MdcValidationRenderer } from 'resources/mdc-components';
 @transient(Contact)
 export class Contact extends EditableObjectViewModel<ContactModel> {
 
-  private _canSave: boolean = false;
-
   constructor(model: ContactModel, private dataService: DataService,  private dialogService: DialogService) {
     super(model);
 
     this.validationController.addRenderer(new MdcValidationRenderer());
+  }
+
+  public get title(): string {
+    return this.model.isNew ? "New Contact" : `${this.model.firstName} ${this.model.lastName}`;
   }
 
   public get canExecuteOk(): boolean {
