@@ -1,6 +1,5 @@
-import { Rule, FluentRuleCustomizer, ValidationRules } from 'aurelia-validation';
+import { Rule } from 'aurelia-validation';
 import { makeString } from 'logofx';
-import { deepClone } from 'logofx/utils';
 
 export interface IModel<T> {
     id: T;
@@ -71,14 +70,6 @@ export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
 
   constructor() {
     super();
-
-    // Object.keys(this).forEach(key => getDefaultBindingEngine().propertyObserver(this, key)
-    //   .subscribe((newValue, oldValue)=>{
-    //     if (newValue !== oldValue) {
-    //       this.isDirty = true;
-    //     }
-    //   }));
-
   }
 
   public get isNew(): boolean {
@@ -98,17 +89,12 @@ export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
   }
 
   public beginEdit(): void {
-    //if (!this.isNew)
-
-      this.cleanDirty();
-      this._isEditing = true;
-      // this._originalState = this.clone(this);
-      // console.log(`Original is ` + this._originalState.toString());
-      // console.log(`This is ` + this.toString());
-  }
+    this.cleanDirty();
+    this._isEditing = true;
+}
 
   public cancelEdit(): void {
-    //this = this.clone(this._originalState);
+    this.cleanDirty();
     this._isEditing = false;
   }
 
@@ -121,9 +107,5 @@ export class EditableModel<T> extends Model<T> implements IEditableModel<T> {
     if (!this._newGuard) {
       this._newGuard = this._isNew = true;
     }
-  }
-
-  private clone(model: IEditableModel<T>): IEditableModel<T> {
-    return deepClone(model);
   }
 }

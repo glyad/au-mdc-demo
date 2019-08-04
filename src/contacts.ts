@@ -1,15 +1,9 @@
-import { WrappingCollection } from './logofx/view-model/WrappingCollection';
-// tslint:disable: no-floating-promises
+import { WrappingCollection, ViewModelCreatorService, WindowManager } from 'logofx';
 import { Contact as ContactViewModel } from './contact';
-import { WindowManager } from './logofx/ui-services/window-manager';
 import { Contact, DataService } from 'model';
-import { ViewModelCreatorService, Guid } from 'logofx';
-import { EditContact } from './edit-contact';
 import { autoinject, transient, View } from "aurelia-framework";
-import { DialogService, DialogController } from "aurelia-dialog";
 import { MDCCheckbox } from '@material/checkbox';
 import { MDCDrawer } from "@material/drawer";
-import { Compose } from 'aurelia-templating-resources';
 
 /**
  * Contacts view model.
@@ -28,11 +22,13 @@ export class Contacts {
               private viewModelCreatorService: ViewModelCreatorService) {  }
 
   public created(owningView: View, myView: View): void {
-    this.dataService.getContacts().then(contacts => {
+    this.dataService.getContacts()
+      .then(contacts => {
       this._wcContacts = new WrappingCollection(
         item => this.viewModelCreatorService.create<ContactViewModel>(ContactViewModel, item),
         this.dataService.contacts);
-    });
+      })
+      .catch(alert);
   }
 
   public attached(): void {
@@ -66,9 +62,7 @@ export class Contacts {
     // .then(a => {
     //   // Do something, if need
     // })
-    .catch(err => {
-      alert(err);
-    })
+    .catch(alert)
     .finally(() => {
       // alert('Всё заебись!');
     });
